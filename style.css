@@ -1,0 +1,429 @@
+/* =========================================
+   Y2K GLOSSY GREEN THEME — berferil.com
+   глянець, хром, "вікна", бульбашки, зелені тони
+   ========================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Audiowide&display=swap');
+
+:root {
+    --bg-deep: #03140a;
+    --bg-mid: #0a2e16;
+    --glass: rgba(210, 255, 225, 0.10);
+    --glass-strong: rgba(210, 255, 225, 0.18);
+    --text-main: #eafff0;
+    --text-muted: #9fd8b0;
+
+    --mint: #b6ffd0;
+    --lime: #7dff3a;
+    --green: #22d14f;
+    --green-deep: #0b7a2e;
+    --aqua: #5dffe0;
+    --chrome-hi: #f4fff7;
+    --chrome-lo: #8fb8a0;
+    --amber: #ffd23a;
+
+    --side-pattern-url: url('img/pattern_background.png');
+    --side-rail-width: clamp(60px, 18vw, 280px);
+
+    --font-display: 'Audiowide', 'Trebuchet MS', Verdana, sans-serif;
+    --font-body: 'Trebuchet MS', Tahoma, Verdana, sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+/* --- Base --- */
+body {
+    margin: 0;
+    min-height: 100vh;
+    padding: 28px calc(var(--side-rail-width) + 16px) 60px;
+    font-family: var(--font-body);
+    color: var(--text-main);
+    line-height: 1.5;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 26px;
+    overflow-x: hidden;
+    position: relative;
+    background-color: var(--bg-deep);
+    background-image:
+        radial-gradient(ellipse 60% 40% at 50% 0%, rgba(125, 255, 58, 0.35), transparent 70%),
+        radial-gradient(circle at 85% 90%, rgba(93, 255, 224, 0.22), transparent 45%),
+        radial-gradient(circle at 10% 70%, rgba(34, 209, 79, 0.25), transparent 40%),
+        linear-gradient(180deg, var(--bg-mid), var(--bg-deep));
+    background-attachment: fixed;
+}
+
+/* --- Бокові смуги з патерном (хромована окантовка) --- */
+body::before,
+body::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    width: var(--side-rail-width);
+    background-image: var(--side-pattern-url);
+    background-repeat: repeat-y;
+    /* більший патерн: картинка в 3 рази ширша за смугу, показується центр */
+    background-size: 300% auto;
+    background-position: center 0;
+    pointer-events: none;
+    z-index: 0;
+    animation: rail-drift 45s linear infinite, rail-breathe 4s ease-in-out infinite;
+}
+/* права смуга їде в протилежний бік */
+body::after { animation-direction: reverse, normal; }
+body::before {
+    left: 0;
+    border-right: 6px solid var(--mint);
+    box-shadow: 6px 0 22px rgba(125, 255, 58, 0.55), inset -3px 0 0 var(--chrome-lo);
+}
+body::after {
+    right: 0;
+    border-left: 6px solid var(--mint);
+    box-shadow: -6px 0 22px rgba(125, 255, 58, 0.55), inset 3px 0 0 var(--chrome-lo);
+}
+
+body > * { position: relative; z-index: 1; max-width: 100%; }
+
+/* --- Header: хромований логотип --- */
+.header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    text-align: center;
+}
+
+.header h1 {
+    margin: 0;
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: clamp(2.2rem, 6vw, 3.8rem);
+    letter-spacing: 0.06em;
+    text-transform: lowercase;
+    /* хромований градієнт всередині тексту */
+    background: linear-gradient(180deg, #ffffff 0%, var(--mint) 38%, var(--green) 50%, var(--green-deep) 52%, var(--lime) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(3, 20, 10, 0.55);
+    filter: drop-shadow(0 0 12px rgba(125, 255, 58, 0.75)) drop-shadow(0 3px 0 rgba(3, 20, 10, 0.8));
+}
+
+.header h1::before { content: '✦ '; color: var(--aqua); -webkit-text-stroke: 0; }
+.header h1::after  { content: ' ✦'; color: var(--aqua); -webkit-text-stroke: 0; }
+
+.header .ne { max-width: 100%; height: auto; }
+
+/* --- Кнопки: глянцеві "желейні" таблетки --- */
+.links,
+.links-container .links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 14px;
+    width: auto;
+    max-width: 560px;
+}
+
+.btn-universal {
+    display: inline-block;
+    width: auto;
+    padding: 9px 26px;
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    font-weight: bold;
+    letter-spacing: 0.08em;
+    text-decoration: none;
+    text-align: center;
+    color: #04240f;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.7);
+    border: 1px solid #0b7a2e;
+    border-radius: 999px;
+    /* верхня половина — білий глянцевий блік */
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.85) 0%, rgba(255, 255, 255, 0.15) 50%, transparent 52%),
+        linear-gradient(180deg, var(--lime) 0%, var(--green) 55%, var(--green-deep) 100%);
+    box-shadow:
+        inset 0 -3px 6px rgba(0, 80, 20, 0.45),
+        inset 0 1px 0 #fff,
+        0 4px 10px rgba(0, 0, 0, 0.5),
+        0 0 16px rgba(125, 255, 58, 0.5);
+    cursor: pointer;
+    transition: transform 0.12s, filter 0.15s, box-shadow 0.15s;
+}
+
+.btn-universal:hover {
+    filter: brightness(1.12) saturate(1.1);
+    box-shadow:
+        inset 0 -3px 6px rgba(0, 80, 20, 0.45),
+        inset 0 1px 0 #fff,
+        0 4px 10px rgba(0, 0, 0, 0.5),
+        0 0 26px var(--lime);
+}
+
+.btn-universal:active {
+    transform: translateY(2px);
+    box-shadow: inset 0 3px 8px rgba(0, 60, 15, 0.6), 0 0 10px rgba(125, 255, 58, 0.5);
+}
+
+.btn-universal:focus-visible,
+.form input:focus-visible,
+#reg-btn:focus-visible {
+    outline: 2px dashed var(--aqua);
+    outline-offset: 3px;
+}
+
+/* рекламна кнопка — золотий глянець */
+.advertisement {
+    border-color: #8a6200;
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.85) 0%, rgba(255, 255, 255, 0.15) 50%, transparent 52%),
+        linear-gradient(180deg, #fff08a 0%, var(--amber) 55%, #b27a00 100%);
+}
+
+.return { align-self: center; }
+
+.links-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+/* --- Форма: "вікно" в стилі Y2K --- */
+.form {
+    width: 100%;
+    max-width: 380px;
+    padding: 0 0 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    overflow: hidden;
+    background: var(--glass);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 2px solid var(--mint);
+    border-radius: 18px;
+    box-shadow:
+        inset 0 0 0 1px rgba(255, 255, 255, 0.25),
+        0 10px 30px rgba(0, 0, 0, 0.55),
+        0 0 28px rgba(125, 255, 58, 0.4);
+}
+
+/* заголовок вікна */
+.form p {
+    margin: 0 0 6px;
+    padding: 9px 16px;
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    letter-spacing: 0.05em;
+    color: #04240f;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.7);
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0.1) 50%, transparent 52%),
+        linear-gradient(180deg, var(--mint), var(--green) 100%);
+    border-bottom: 2px solid var(--green-deep);
+}
+
+.form label {
+    margin: 0 20px;
+    font-size: 0.8rem;
+    letter-spacing: 0.04em;
+    color: var(--mint);
+}
+
+.form input {
+    width: calc(100% - 40px);
+    margin: 0 20px;
+    padding: 10px 14px;
+    font-family: inherit;
+    font-size: 0.9rem;
+    color: var(--text-main);
+    background: rgba(2, 20, 8, 0.65);
+    border: 2px solid var(--green-deep);
+    border-radius: 999px;
+    outline: none;
+    box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.6);
+    transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.form input::placeholder { color: var(--text-muted); opacity: 0.7; }
+
+.form input:focus {
+    border-color: var(--lime);
+    box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.6), 0 0 14px rgba(125, 255, 58, 0.7);
+}
+
+#reg-btn {
+    margin: 8px 20px 0;
+    padding: 11px;
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    font-weight: bold;
+    letter-spacing: 0.08em;
+    color: #04240f;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.7);
+    border: 1px solid #0b7a2e;
+    border-radius: 999px;
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.85) 0%, rgba(255, 255, 255, 0.15) 50%, transparent 52%),
+        linear-gradient(180deg, var(--lime) 0%, var(--green) 55%, var(--green-deep) 100%);
+    box-shadow:
+        inset 0 -3px 6px rgba(0, 80, 20, 0.45),
+        inset 0 1px 0 #fff,
+        0 4px 10px rgba(0, 0, 0, 0.5),
+        0 0 16px rgba(125, 255, 58, 0.5);
+    cursor: pointer;
+    transition: transform 0.12s, filter 0.15s;
+}
+
+#reg-btn:hover  { filter: brightness(1.12) saturate(1.1); }
+#reg-btn:active { transform: translateY(2px); box-shadow: inset 0 3px 8px rgba(0, 60, 15, 0.6); }
+
+/* --- Гіфка: скляна рамка --- */
+#engineer-gif {
+    display: block;
+    width: 240px;
+    max-width: 100%;
+    height: auto;
+    padding: 6px;
+    background: linear-gradient(180deg, var(--chrome-hi), var(--chrome-lo));
+    border: 2px solid var(--mint);
+    border-radius: 16px;
+    box-shadow:
+        0 8px 22px rgba(0, 0, 0, 0.55),
+        0 0 24px rgba(125, 255, 58, 0.5);
+}
+
+::selection { background: var(--lime); color: #04240f; }
+
+::-webkit-scrollbar { width: 14px; }
+::-webkit-scrollbar-track { background: var(--bg-deep); }
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(90deg, var(--mint), var(--green));
+    border: 2px solid var(--bg-deep);
+    border-radius: 999px;
+}
+
+@media (max-width: 600px) {
+    body { padding-left: calc(var(--side-rail-width) + 8px); padding-right: calc(var(--side-rail-width) + 8px); }
+    .btn-universal { padding: 8px 16px; font-size: 0.78rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+
+/* =========================================
+   IDLE-АНІМАЦІЇ (самі по собі, без взаємодії)
+   ========================================= */
+
+/* --- Смуги з листочками: повільний дрейф + "дихання" --- */
+@keyframes rail-drift {
+    from { background-position: center 0; }
+    /* висота одного тайла = ширина смуги * 3 * (452/800) */
+    to   { background-position: center calc(var(--side-rail-width) * 1.695); }
+}
+@keyframes rail-breathe {
+    0%, 100% { filter: brightness(0.9); }
+    50%      { filter: brightness(1.25); }
+}
+
+/* --- Логотип: плаває, світиться, зірочки мерехтять --- */
+.header h1 {
+    animation: logo-float 5s ease-in-out infinite, logo-glow 3s ease-in-out infinite;
+}
+@keyframes logo-float {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-6px); }
+}
+@keyframes logo-glow {
+    0%, 100% { filter: drop-shadow(0 0 8px rgba(125,255,58,.5))  drop-shadow(0 3px 0 rgba(3,20,10,.8)); }
+    50%      { filter: drop-shadow(0 0 20px rgba(125,255,58,.95)) drop-shadow(0 3px 0 rgba(3,20,10,.8)); }
+}
+
+.header h1::before,
+.header h1::after {
+    display: inline-block;
+    animation: twinkle 2.6s ease-in-out infinite;
+}
+.header h1::after { animation-delay: 1.3s; }
+@keyframes twinkle {
+    0%, 100% { transform: scale(.6) rotate(0deg);   opacity: .45; }
+    50%      { transform: scale(1.25) rotate(90deg); opacity: 1; }
+}
+
+/* --- Кнопки: час від часу по них пробігає блік --- */
+.btn-universal {
+    position: relative;
+    overflow: hidden;
+}
+.btn-universal::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: -60%;
+    width: 40%;
+    background: linear-gradient(100deg, transparent, rgba(255,255,255,.8), transparent);
+    transform: skewX(-20deg);
+    pointer-events: none;
+    animation: glint 5s ease-in-out infinite;
+}
+@keyframes glint {
+    0%, 70% { left: -60%; }
+    100%    { left: 130%; }
+}
+.links a:nth-child(2)::after { animation-delay: .7s; }
+.links a:nth-child(3)::after { animation-delay: 1.4s; }
+.links a:nth-child(4)::after { animation-delay: 2.1s; }
+.links a:nth-child(5)::after { animation-delay: 2.8s; }
+.links a:nth-child(6)::after { animation-delay: 3.5s; }
+.links a:nth-child(7)::after { animation-delay: 4.2s; }
+
+/* посилання-гіфка не повинно мати вигляд кнопки */
+a.btn-universal:has(#engineer-gif) {
+    padding: 0;
+    background: none;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    overflow: visible;
+}
+a.btn-universal:has(#engineer-gif)::after { display: none; }
+a.btn-universal:has(#engineer-gif):hover  { filter: none; box-shadow: none; }
+
+/* --- Інженер: як idle у грі — стоїть, пульсує і іноді підстрибує --- */
+#engineer-gif {
+    transform-origin: 50% 100%;
+    animation: idle-hop 4.5s ease-in-out infinite, gif-glow 3s ease-in-out infinite;
+}
+@keyframes idle-hop {
+    0%, 55%, 100% { transform: translateY(0) scale(1, 1); }
+    60%           { transform: translateY(0) scale(1.05, .93); }
+    68%           { transform: translateY(-18px) scale(.97, 1.05); }
+    76%           { transform: translateY(0) scale(1.05, .93); }
+    82%           { transform: translateY(0) scale(1, 1); }
+}
+@keyframes gif-glow {
+    0%, 100% { box-shadow: 0 8px 22px rgba(0,0,0,.55), 0 0 14px rgba(125,255,58,.35); }
+    50%      { box-shadow: 0 8px 22px rgba(0,0,0,.55), 0 0 32px rgba(125,255,58,.8); }
+}
+
+/* --- Форма-вікно: ледь помітно гойдається, індикатор блимає --- */
+.form { animation: window-float 6s ease-in-out infinite; }
+@keyframes window-float {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-4px); }
+}
+.form p::after {
+    content: '●';
+    float: right;
+    color: var(--green-deep);
+    animation: blink 1.6s linear infinite;
+}
+@keyframes blink {
+    0%, 60% { opacity: 1; }
+    61%, 100% { opacity: .15; }
+}
